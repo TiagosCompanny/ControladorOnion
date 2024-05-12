@@ -1,0 +1,150 @@
+﻿#FileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.inputFile {
+    width: 600px;
+    padding: 10px;
+    border: 2px solid #1f77b3;
+    border-radius: 8px;
+    margin-right: 10px;
+    color: black;
+}
+
+.buttonFile {
+    padding: 12px;
+    background-color: #2eb4cc;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+    .buttonFile:hover {
+        background-color: #217c8c;
+    }
+
+    .buttonFile:active {
+        background-color: #1b1a63;
+    }
+
+#buttonActionTool {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 15px 50px;
+    background-color: #2ecc71;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+    #buttonActionTool:hover {
+        background-color: #218c4e;
+    }
+
+    #buttonActionTool:active {
+        background-color: #1a6341;
+    }
+
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #3498db;
+    border-radius: 50%;
+    outline: none;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+    input[type="radio"]:checked {
+        background-color: #1c8f4c;
+        border-color: #000000;
+        cursor: pointer;
+    }
+
+/* Estilizando o rótulo associado ao radio button */
+label {
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium';
+    font-size: large;
+}
+
+.buttonMenuInitial {
+    background-color: #93E9D2;
+    border: 2px solid #11689e;
+    border-radius: 30px;
+    box-shadow: #11689e 4px 4px 0 0;
+    color: #11689e;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0 18px;
+    line-height: 50px;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+    .buttonMenuInitial:hover {
+        background-color: #1a7e83;
+        color: #7BC5F3;
+        box-shadow: #0F8A86 4px 4px 0 0;
+    }
+
+    .buttonMenuInitial:active {
+        box-shadow: #1a7e83 2px 2px 0 0;
+        transform: translate(2px, 2px);
+    }
+
+@media (min-width: 768px) {
+    .buttonMenuInitial {
+        min-width: 120px;
+        padding: 0 25px;
+    }
+}
+
+.button-mecanic {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #000;
+    cursor: pointer;
+    border: 3px solid;
+    padding: 0.25em 0.5em;
+    box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+    .button-mecanic:active {
+        box-shadow: 0px 0px 0px 0px;
+        top: 5px;
+        left: 5px;
+    }
+
+@media (min-width: 768px) {
+    .button-mecanic {
+        padding: 0.25em 0.75em;
+    }
+}
+
+
+/* _______________________________________________*/

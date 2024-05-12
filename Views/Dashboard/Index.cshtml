@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1>Pedidos</h1>
+
+<div class="container">
+    <!-- Gráfico de Pizza para a distribuição de pedidos por região -->
+    <div class="chart-container">
+        <canvas id="chartRegiao"></canvas>
+    </div>
+
+    <!-- Gráfico de Pizza para o tempo de entrega -->
+    <div class="chart-container">
+        <canvas id="chartTempoEntrega"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Biblioteca de gráficos Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Dados para os gráficos
+        var dadosRegiao = {
+            labels: ["Norte/Nordeste", "Centro-oeste/Sul", "Sudeste", "São Paulo Capital"],
+            datasets: [{
+                label: "Distribuição de Pedidos por Região",
+                data: [30, 20, 10, 40], // Exemplo: valores fictícios, você precisa calcular esses valores
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        var dadosTempoEntrega = {
+            labels: ["Norte/Nordeste", "Centro-oeste/Sul", "Sudeste", "São Paulo Capital"],
+            datasets: [{
+                label: "Tempo de Entrega",
+                data: [10, 5, 1, 0], // Exemplo: valores fictícios, você precisa calcular esses valores
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Inicializar gráfico de pizza para a distribuição de pedidos por região
+        var ctxRegiao = document.getElementById('chartRegiao').getContext('2d');
+        var chartRegiao = new Chart(ctxRegiao, {
+            type: 'pie',
+            data: dadosRegiao,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribuição de Pedidos por Região'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+
+        // Inicializar gráfico de pizza para o tempo de entrega
+        var ctxTempoEntrega = document.getElementById('chartTempoEntrega').getContext('2d');
+        var chartTempoEntrega = new Chart(ctxTempoEntrega, {
+            type: 'pie',
+            data: dadosTempoEntrega,
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Tempo de Entrega'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    </script>
+}

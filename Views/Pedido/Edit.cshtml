@@ -1,0 +1,60 @@
+﻿@model ControladorOnion.Models.Pedido
+
+@{
+    ViewData["Title"] = "Editar Pedido";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<h1>Editar Pedido</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="Pedido" asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PedidoId" />
+                <label asp-for="CPFouCNPJ" class="control-label"></label>
+                <input asp-for="CPFouCNPJ" class="form-control" />
+                <span asp-validation-for="CPFouCNPJ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomeOuRazaoSocial" class="control-label"></label>
+                <input asp-for="NomeOuRazaoSocial" class="form-control" />
+                <span asp-validation-for="NomeOuRazaoSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CEP" class="control-label"></label>
+                <input asp-for="CEP" class="form-control" />
+                <span asp-validation-for="CEP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Produto" class="control-label"></label>
+                <input asp-for="Produto" class="form-control" />
+                <span asp-validation-for="Produto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPedido" class="control-label"></label>
+                <input asp-for="NumeroPedido" class="form-control" />
+                <span asp-validation-for="NumeroPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" type="date" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Pedido" asp-action="Index">Voltar para a lista</a>
+</div>

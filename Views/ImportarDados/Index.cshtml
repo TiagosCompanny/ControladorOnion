@@ -1,0 +1,65 @@
+﻿@model ControladorOnion.Models.SystemModels.FileModel
+
+@{
+    ViewData["Title"] = "Importar Excel";
+}
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<h1>Importar Dados do Excel</h1>
+
+<form method="post" enctype="multipart/form-data" action="@Url.Action("UploadPlanilhaPedidos", "ImportarDados")">
+    <div class="mb-3">
+        <label for="InputFile" class="form-label">Selecione o arquivo Excel:</label>
+        <input type="file" id="InputFile" name="InputFile" class="form-control" accept=".xlsx, .xls" title="Selecione um Arquivo" />
+        <span asp-validation-for="InputFile" class="text-danger"></span>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Importar Planilha</button>
+</form>
+
+<!-- Modelo de planilha-->
+<div class="mt-4">
+    <h2>Exemplo de Tabela:</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center bg-light">​</th>
+                    <th class="text-center bg-light">A</th>
+                    <th class="text-center bg-light">B</th>
+                    <th class="text-center bg-light">C</th>
+                    <th class="text-center bg-light">D</th>
+                    <th class="text-center bg-light">E</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center bg-light">1</td>
+                    <th class="text-center" style="background-color: #cfe2f3; font-weight: bold;">Documento <i class="bi bi-sort-down"></i></td>
+                    <td class="text-center" style="background-color: #cfe2f3; font-weight: bold;">Razão Social <i class="bi bi-sort-down"></i></td>
+                    <td class="text-center" style="background-color: #cfe2f3; font-weight: bold;">CEP <i class="bi bi-sort-down"></i></td>
+                    <td class="text-center" style="background-color: #cfe2f3; font-weight: bold;">Produto <i class="bi bi-sort-down"></i></td>
+                    <td class="text-center" style="background-color: #cfe2f3; font-weight: bold;">Número do Pedido <i class="bi bi-sort-down"></i></td>
+                </tr>
+                <tr>
+                    <td class="text-center bg-light">2</td>
+                    <td>123456789</td>
+                    <td>Empresa XYZ</td>
+                    <td>12345-678</td>
+                    <td>Produto A</td>
+                    <td>123456</td>
+                </tr>
+                <tr>
+                    <td class="text-center bg-light">3</td>
+                    <td>987654321</td>
+                    <td>Empresa ABC</td>
+                    <td>54321-876</td>
+                    <td>Produto B</td>
+                    <td>654321</td>
+                </tr>
+                <!-- Adicione mais linhas conforme necessário -->
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿@model List<ControladorOnion.Models.Pedido>
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+}
+
+<div style="display:flex; justify-content:space-between">
+    <h1>Lista de Pedidos</h1>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Cadastrar um novo pedido</a>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>CPF/CNPJ</th>
+            <th>Nome/Razão Social</th>
+            <th>CEP</th>
+            <th>Produto</th>
+            <th>Número do Pedido</th>
+            <th>Data</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            CultureInfo culturaDataHora = new CultureInfo("pt-BR");
+        }
+
+        @foreach (var pedido in Model)
+        {
+            <tr>
+                <td>@pedido.PedidoId</td>
+                <td>@pedido.CPFouCNPJ</td>
+                <td>@pedido.NomeOuRazaoSocial</td>
+                <td>@pedido.CEP</td>
+                <td>@pedido.Produto</td>
+                <td>@pedido.NumeroPedido</td>
+                <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@pedido.PedidoId" class="btn btn-info">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@pedido.PedidoId" class="btn btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+﻿@model ControladorOnion.Models.Produto
+
+@{
+    ViewData["Title"] = "Confirmar Exclusão";
+}
+
+<h1>Confirmar Exclusão</h1>
+
+<div>
+    <p>Você tem certeza de que deseja excluir o produto "@Model.Nome"?</p>
+    <p>Este processo é irreversível.</p>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ProdutoId" />
+        <div class="form-group">
+            <input type="submit" value="Confirmar" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>

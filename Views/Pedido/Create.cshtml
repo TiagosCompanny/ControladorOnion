@@ -1,0 +1,58 @@
+﻿@model ControladorOnion.Models.Pedido
+
+@{
+    ViewData["Title"] = "Cadastrar Pedido";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<h1>Criar Pedido</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CPFouCNPJ" class="control-label"></label>
+                <input asp-for="CPFouCNPJ" class="form-control" />
+                <span asp-validation-for="CPFouCNPJ" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomeOuRazaoSocial" class="control-label"></label>
+                <input asp-for="NomeOuRazaoSocial" class="form-control" />
+                <span asp-validation-for="NomeOuRazaoSocial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CEP" class="control-label"></label>
+                <input asp-for="CEP" class="form-control" />
+                <span asp-validation-for="CEP" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Produto" class="control-label"></label>
+                <input asp-for="Produto" class="form-control" />
+                <span asp-validation-for="Produto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPedido" class="control-label"></label>
+                <input asp-for="NumeroPedido" class="form-control" />
+                <span asp-validation-for="NumeroPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" type="date" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar Pedido" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+<div>
+    <a asp-action="Index" class="button-mecanic">Voltar para a lista</a>
+</div>

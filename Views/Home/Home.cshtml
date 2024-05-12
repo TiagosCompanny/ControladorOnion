@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <link rel="stylesheet" href="~/Content/StyleTools.css"/>
+</head>
+<div class="text-center">
+     <br>
+    <br>
+    <section class="row" aria-labelledby="aspnetTitle" style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; width: 80%;">
+            <p class="lead" style="text-align: justify; font-family: Bahnschrift, sans-serif; font-size: 20px; margin-right: 80px">
+                A produtividade é o resultado da eficiência com que uma pessoa ou organização usa seus recursos para alcançar seus objetivos.
+                No mundo atual, cada vez mais competitivo, é essencial ter o controler das vendas e logística. O Controlador Onion é uma aplicação Web que
+                oferece ferramentas para te ajudar na admisnitração e controler de dados!
+            </p>
+            <div>
+                <img src="\Content\Imagens\guyworking.gif" alt="GIF">
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <div class="row">
+        <hr>
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <h2 id="gettingStartedTitle">Importar Dados</h2>
+            <p>
+                Importe aqui os dados dos novos pedidos
+            </p>
+            <p>
+                @Html.ActionLink("Cadastrar Dados", "Index", "ImportarDados", new { area = "" }, new { @class = "buttonMenuInitial" })
+            </p>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+            <h2 id="librariesTitle">Relatórios</h2>
+            <p>
+                Clique para visualizar nosso Dashboard de pedidos.
+            </p>
+            <p>
+                @Html.ActionLink("DashBoard", "Index", "Dashboard", new { area = "" }, new { @class = "buttonMenuInitial" })
+            </p>
+        </section>
+    </div>
+</div>
