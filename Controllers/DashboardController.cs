@@ -42,6 +42,7 @@ namespace ControladorOnion.Controllers
             ViewData["ValorSul"] = 0;
             foreach (var regiao in vendasPorRegiao)
             {
+#pragma warning disable CS8602
                 switch (regiao.Regiao.ToLower())
                 {
                     case "norte":
@@ -63,6 +64,7 @@ namespace ControladorOnion.Controllers
                         // Outras regiões, se houver, podem ser tratadas aqui
                         break;
                 }
+#pragma warning restore CS8602
             }
 
 
