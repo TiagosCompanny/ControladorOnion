@@ -5,8 +5,8 @@ namespace ControladorOnion.Models
     public class Cliente
     {
         [Key]
-        public string CPFouCNPJ { get; set; }
-        public string NomeOuRazaoSocial { get; set; }
-        public string CEP { get; set; }
+        public required string CPFouCNPJ { get; set; }
+        public required string NomeOuRazaoSocial { get; set; }
+        public required string CEP { get; set; }
     }
 }

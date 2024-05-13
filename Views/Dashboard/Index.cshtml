@@ -14,167 +14,180 @@
 <body>
     <h1>Dashboard</h1>
     <br>
-    <div style="display: flex; margin-top: 10px">
-        <div>
-            <p>Produtos mais Vendidos</p>
-            <canvas id="myChart" style="max-width: 500px; max-height: 300px;"></canvas>
+
+    @if (TempData["DashboardMessageNoData"] != null)
+    {
+        <br>
+        <div class="alert alert-warning" role="alert">
+            @TempData["DashboardMessageNoData"]
         </div>
-      
-        <div>
-            <p>Vendas por Região</p>
-            <canvas id="vendasPorRegiaoChart" style="max-width: 500px; max-height: 300px;"></canvas>
+    }
+    else
+    {
+        <div style="display: flex; margin-top: 10px">
+            <div>
+                <p>Produtos mais Vendidos</p>
+                <canvas id="myChart" style="max-width: 500px; max-height: 300px;"></canvas>
+            </div>
+
+            <div>
+                <p>Vendas por Região</p>
+                <canvas id="vendasPorRegiaoChart" style="max-width: 500px; max-height: 300px;"></canvas>
+            </div>
+
+
         </div>
-       
 
-    </div>
+        <br>
+        <hr>
+        <h1>Lista de Pedidos</h1>
 
-    <br>
-    <hr>
-    <h1>Lista de Pedidos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>CPF/CNPJ</th>
+                    <th>Nome/Razão Social</th>
+                    <th>CEP</th>
+                    <th>Produto</th>
+                    <th>Número do Pedido</th>
+                    <th>Dias para Entrega</th>
+                    <th>Valor Frete</th>
+                    <th>Data</th>
+                    <th>Região</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    CultureInfo culturaDataHora = new CultureInfo("pt-BR");
+                }
 
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>CPF/CNPJ</th>
-            <th>Nome/Razão Social</th>
-            <th>CEP</th>
-            <th>Produto</th>
-            <th>Número do Pedido</th>
-            <th>Dias para Entrega</th>
-            <th>Valor Frete</th>
-            <th>Data</th>
-            <th>Região</th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            CultureInfo culturaDataHora = new CultureInfo("pt-BR");
-        }
+                @foreach (var pedido in Model)
+                {
+                    <tr>
+                        <td>@pedido.PedidoId</td>
+                        <td>@pedido.CPFouCNPJ</td>
+                        <td>@pedido.NomeOuRazaoSocial</td>
+                        <td>@pedido.CEP</td>
+                        <td>@pedido.Produto</td>
+                        <td>@pedido.NumeroPedido</td>
+                        <td>@pedido.TempoEntregaEmDias</td>
+                        <td>@pedido.ValorFrete</td>
+                        <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
+                        <td>@pedido.Regiao</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-        @foreach (var pedido in Model)
-        {
-            <tr>
-                <td>@pedido.PedidoId</td>
-                <td>@pedido.CPFouCNPJ</td>
-                <td>@pedido.NomeOuRazaoSocial</td>
-                <td>@pedido.CEP</td>
-                <td>@pedido.Produto</td>
-                <td>@pedido.NumeroPedido</td>
-                <td>@pedido.TempoEntregaEmDias</td>
-                <td>@pedido.ValorFrete</td>
-                <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
-                <td>@pedido.Regiao</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <script>
+            // Obtendo dados dos produtos mais vendidos do ViewData
+            var produtosMaisVendidos = @Html.Raw(Json.Serialize(ViewData["ProdutosMaisVendidos"]));
 
-    <script>
-        // Obtendo dados dos produtos mais vendidos do ViewData
-        var produtosMaisVendidos = @Html.Raw(Json.Serialize(ViewData["ProdutosMaisVendidos"]));
+            // Extraindo labels e valores para o gráfico
+            var labels = produtosMaisVendidos.map(function (item) { return item.produto; });
+            var valores = produtosMaisVendidos.map(function (item) { return item.quantidadeVendida; });
 
-        // Extraindo labels e valores para o gráfico
-        var labels = produtosMaisVendidos.map(function (item) { return item.produto; });
-        var valores = produtosMaisVendidos.map(function (item) { return item.quantidadeVendida; });
-
-        // Criando o gráfico de pizza
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Quantidade Vendida',
-                    data: valores,
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)', // Azul
-                        'rgba(255, 206, 86, 0.2)',  // Amarelo
-                        'rgba(75, 192, 192, 0.2)',  // Verde
-                        'rgba(153, 102, 255, 0.2)', // Roxo
-                        'rgba(255, 99, 132, 0.2)'   // Vermelho
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)', // Azul
-                        'rgba(255, 206, 86, 1)',  // Amarelo
-                        'rgba(75, 192, 192, 1)',  // Verde
-                        'rgba(153, 102, 255, 1)', // Roxo
-                        'rgba(255, 99, 132, 1)'   // Vermelho
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            // Criando o gráfico de pizza
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Quantidade Vendida',
+                        data: valores,
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.2)', // Azul
+                            'rgba(255, 206, 86, 0.2)',  // Amarelo
+                            'rgba(75, 192, 192, 0.2)',  // Verde
+                            'rgba(153, 102, 255, 0.2)', // Roxo
+                            'rgba(255, 99, 132, 0.2)'   // Vermelho
+                        ],
+                        borderColor: [
+                            'rgba(54, 162, 235, 1)', // Azul
+                            'rgba(255, 206, 86, 1)',  // Amarelo
+                            'rgba(75, 192, 192, 1)',  // Verde
+                            'rgba(153, 102, 255, 1)', // Roxo
+                            'rgba(255, 99, 132, 1)'   // Vermelho
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
+            });
+
+
+            @{
+                // Supondo que você tenha definido os valores para as regiões na ViewBag
+                int valorNorte = ViewBag.ValorNorte;
+                int valorNordeste = ViewBag.ValorNordeste;
+                int CentroOeste = ViewBag.ValorCentroOeste;
+                int valorSudeste = ViewBag.ValorSudeste;
+                int valorSul = ViewBag.ValorSul;
             }
-        });
+                                                // Obter dados das vendas por região (supondo que seja passado da controller)
+                                                var vendasPorRegiao = [
+                { "Regiao": "Norte", "TotalVendas": @valorNorte },
+                { "Regiao": "Nordeste", "TotalVendas": @valorNordeste },
+                { "Regiao": "CentroOeste", "TotalVendas": @CentroOeste },
+                { "Regiao": "Sudeste", "TotalVendas": @valorSudeste },
+                { "Regiao": "Sul", "TotalVendas": @valorSul }
+                // Adicione mais regiões conforme necessário
+            ];
+
+            var produtosMaisVendidos = @Html.Raw(Json.Serialize(ViewData["ProdutosMaisVendidos"]));
+
+            // Extrair rótulos e valores dos dados
+            var labels = vendasPorRegiao.map(function (item) {
+                return item.Regiao;
+            });
+            var valores = vendasPorRegiao.map(function (item) {
+                return item.TotalVendas;
+            });
+
+            // Criar o gráfico de pizza
+            var ctx = document.getElementById('vendasPorRegiaoChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Vendas por Região',
+                        data: valores,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)', // Cor para a primeira região
+                            'rgba(54, 162, 235, 0.6)', // Cor para a segunda região
+                            'rgba(255, 206, 86, 0.6)', // Cor para a terceira região
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(75, 192, 192, 0.6)'  // Cor para a quarta região
+                            // Adicione mais cores conforme necessário para o número de regiões
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)', // Cor da borda para a primeira região
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)'
+
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    // Algumas opções adicionais, se necessário
+                }
+            });
+        </script>
+    }
 
 
-        @{
-            // Supondo que você tenha definido os valores para as regiões na ViewBag
-            int valorNorte = ViewBag.ValorNorte;
-            int valorNordeste = ViewBag.ValorNordeste;
-            int CentroOeste = ViewBag.ValorCentroOeste;
-            int valorSudeste = ViewBag.ValorSudeste;
-            int valorSul = ViewBag.ValorSul;
-        }
-                // Obter dados das vendas por região (supondo que seja passado da controller)
-                var vendasPorRegiao = [
-            { "Regiao": "Norte", "TotalVendas": @valorNorte },
-            { "Regiao": "Nordeste", "TotalVendas": @valorNordeste },
-            { "Regiao": "CentroOeste", "TotalVendas": @CentroOeste },
-            { "Regiao": "Sudeste", "TotalVendas": @valorSudeste },
-            { "Regiao": "Sul", "TotalVendas": @valorSul }
-            // Adicione mais regiões conforme necessário
-        ];
-
-        var produtosMaisVendidos = @Html.Raw(Json.Serialize(ViewData["ProdutosMaisVendidos"]));
-
-        // Extrair rótulos e valores dos dados
-        var labels = vendasPorRegiao.map(function (item) {
-            return item.Regiao;
-        });
-        var valores = vendasPorRegiao.map(function (item) {
-            return item.TotalVendas;
-        });
-
-        // Criar o gráfico de pizza
-        var ctx = document.getElementById('vendasPorRegiaoChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Vendas por Região',
-                    data: valores,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.6)', // Cor para a primeira região
-                        'rgba(54, 162, 235, 0.6)', // Cor para a segunda região
-                        'rgba(255, 206, 86, 0.6)', // Cor para a terceira região
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(75, 192, 192, 0.6)'  // Cor para a quarta região
-                        // Adicione mais cores conforme necessário para o número de regiões
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)', // Cor da borda para a primeira região
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)'
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                // Algumas opções adicionais, se necessário
-            }
-        });
-    </script>
 
 
 </body>

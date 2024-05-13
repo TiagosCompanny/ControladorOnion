@@ -4,6 +4,7 @@ using ControladorOnion.Models.SystemModels;
 using ControladorOnion.Repository;
 using ControladorOnion.Services;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ControladorOnion.Controllers
 {
@@ -16,16 +17,10 @@ namespace ControladorOnion.Controllers
         {
             _pedidoRepository = new PedidoRepository(context);
         }
-
-
         public IActionResult Index()
         {
             return View();
         }
-
-
-
-
 
         [HttpPost]
         public async Task<IActionResult> UploadPlanilhaPedidos(FileModel model)
@@ -42,28 +37,27 @@ namespace ControladorOnion.Controllers
                         model.InputFile.CopyTo(stream);
                     }
 
-                    // Validar o arquivo
                     var (pedidos, erros) = Util.ValidarPlanilhaDePedidos(filePath);
 
-                    // Deletar o arquivo temporário
                     System.IO.File.Delete(filePath);
 
                     if (erros.Any())
                     {
-                        // Se houver erros, adicionar mensagens de erro ao ModelState
                         foreach (var erro in erros)
                         {
-                            ModelState.AddModelError("", erro);
+                            ModelState.AddModelError("InputFile", erro);
                         }
-
-                        // Retornar à mesma view com os erros
                         return View("Index", model);
                     }
-
+                    if(pedidos.Count == 0)
+                    {
+                        ModelState.AddModelError("InputFile", "Erro ao importar dados verifique se a planilha está no formato correto");
+                        return View("Index", model);
+                    }
                     await _pedidoRepository.CadastrarPedidosAsync(pedidos);
 
+                    TempData["SuccessMessage"] = "Os dados foram importados com sucesso.";
 
-                    //TODO: Escrever uma mensagem positiva de dados importados com sucesso
                     return RedirectToAction("Index", "ImportarDados");
                 }
                 else

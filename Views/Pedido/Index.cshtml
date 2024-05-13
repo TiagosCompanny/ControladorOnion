@@ -12,43 +12,54 @@
     </p>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>CPF/CNPJ</th>
-            <th>Nome/Razão Social</th>
-            <th>CEP</th>
-            <th>Produto</th>
-            <th>Número do Pedido</th>
-            <th>Dias para Entrega</th>
-            <th>Valor Frete</th>
-            <th>Data</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            CultureInfo culturaDataHora = new CultureInfo("pt-BR");
-        }
 
-        @foreach (var pedido in Model)
-        {
+@if (TempData["PedidoMessageNoData"] != null)
+{
+    <br>
+    <div class="alert alert-warning" role="alert">
+        @TempData["PedidoMessageNoData"]
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
             <tr>
-                <td>@pedido.PedidoId</td>
-                <td>@pedido.CPFouCNPJ</td>
-                <td>@pedido.NomeOuRazaoSocial</td>
-                <td>@pedido.CEP</td>
-                <td>@pedido.Produto</td>
-                <td>@pedido.NumeroPedido</td>
-                <td>@pedido.TempoEntregaEmDias</td>
-                <td>@pedido.ValorFrete</td>
-                <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@pedido.PedidoId" class="btn btn-info">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@pedido.PedidoId" class="btn btn-danger">Excluir</a>
-                </td>
+                <th>Id</th>
+                <th>CPF/CNPJ</th>
+                <th>Nome/Razão Social</th>
+                <th>CEP</th>
+                <th>Produto</th>
+                <th>Número do Pedido</th>
+                <th>Dias para Entrega</th>
+                <th>Valor Frete</th>
+                <th>Data</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @{
+                CultureInfo culturaDataHora = new CultureInfo("pt-BR");
+            }
+
+            @foreach (var pedido in Model)
+            {
+                <tr>
+                    <td>@pedido.PedidoId</td>
+                    <td>@pedido.CPFouCNPJ</td>
+                    <td>@pedido.NomeOuRazaoSocial</td>
+                    <td>@pedido.CEP</td>
+                    <td>@pedido.Produto</td>
+                    <td>@pedido.NumeroPedido</td>
+                    <td>@pedido.TempoEntregaEmDias</td>
+                    <td>@pedido.ValorFrete</td>
+                    <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@pedido.PedidoId" class="btn btn-info">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@pedido.PedidoId" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

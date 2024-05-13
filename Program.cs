@@ -9,8 +9,10 @@ namespace ControladorOnion
         {
             var builder = WebApplication.CreateBuilder(args);
 
+#pragma warning disable CS8604 // Possível argumento de referência nula.
             builder.Services.AddDbContext<ControladorContext>(option => 
             option.UseInMemoryDatabase(builder.Configuration.GetConnectionString("DbOnion")));
+#pragma warning restore CS8604 // Possível argumento de referência nula.
 
 
             // Add services to the container.

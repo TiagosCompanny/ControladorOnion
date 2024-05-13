@@ -11,23 +11,31 @@ namespace ControladorOnion.Services
         {
             string url = $"https://viacep.com.br/ws/{cep}/json/";
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new())
             {
                 HttpResponseMessage response = await client.GetAsync(url);
                 if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
-                    dynamic data = JsonConvert.DeserializeObject(json); // Para versões antigas do .NET, pode usar JsonConvert
-                    if (data.erro == null)
-                    {
-                        string cidade = data.localidade;
-                        string uf = data.uf;
+                    dynamic? data = JsonConvert.DeserializeObject(json); // Para versões antigas do .NET, pode usar JsonConvert
 
-                        return (uf, cidade);
+                    if(data is not null )
+                    {
+                        if (data.erro == null)
+                        {
+                            string cidade = data.localidade;
+                            string uf = data.uf;
+
+                            return (uf, cidade);
+                        }
+                        else
+                        {
+                            return ("CEP não encontrado", "");
+                        }
                     }
                     else
                     {
-                        return ("CEP não encontrado", "C");
+                        throw new Exception("Erro Api, entrar em contato com o time de desenvolvimento");
                     }
                 }
                 else
@@ -39,77 +47,35 @@ namespace ControladorOnion.Services
 
         public string ObterRegiaoPorUF(string uf)
         {
-            switch (uf.ToUpper())
+            return uf.ToUpper() switch
             {
                 // Norte
-                case "AC":
-                case "AP":
-                case "AM":
-                case "PA":
-                case "RO":
-                case "RR":
-                case "TO":
-                    return "Norte";
-
+                "AC" or "AP" or "AM" or "PA" or "RO" or "RR" or "TO" => "Norte",
                 // Nordeste
-                case "AL":
-                case "BA":
-                case "CE":
-                case "MA":
-                case "PB":
-                case "PE":
-                case "PI":
-                case "RN":
-                case "SE":
-                    return "Nordeste";
-
+                "AL" or "BA" or "CE" or "MA" or "PB" or "PE" or "PI" or "RN" or "SE" => "Nordeste",
                 // Centro-Oeste
-                case "DF":
-                case "GO":
-                case "MT":
-                case "MS":
-                    return "Centro-Oeste";
-
+                "DF" or "GO" or "MT" or "MS" => "Centro-Oeste",
                 // Sul
-                case "PR":
-                case "RS":
-                case "SC":
-                    return "Sul";
-
+                "PR" or "RS" or "SC" => "Sul",
                 // Sudeste
-                case "ES":
-                case "MG":
-                case "RJ":
-                case "SP":
-                    return "Sudeste";
-
-                default:
-                    return "Região não identificada";
-            }
+                "ES" or "MG" or "RJ" or "SP" => "Sudeste",
+                _ => "Região não identificada",
+            };
         }
 
-        public int CalcularTempoDeEntregaEmDias(string uf)
+        public string CalcularTempoDeEntregaEmDias(string uf)
         {
             if (uf.ToUpper() == "SP")
-                return 0;
+                return "No mesmo dia";
 
             var regiao = ObterRegiaoPorUF(uf);
-            switch (regiao)
+            return regiao switch
             {
-                case "Norte":
-                case "Nordeste":
-                    return 10;
-
-                case "Centro-Oeste":
-                case "Sul":
-                    return 5;
-
-                case "Sudeste":
-                    return 1;
-
-                default:
-                    throw new ArgumentException("Região não identificada");
-            }
+                "Norte" or "Nordeste" => "10 dias úteis",
+                "Centro-Oeste" or "Sul" => "5 dias úteis",
+                "Sudeste" => "1 dia corrido",
+                _ => throw new ArgumentException("Região não identificada"),
+            };
         }
 
         public decimal ObterPorcentagemCalculoFrete(string uf)
@@ -119,22 +85,13 @@ namespace ControladorOnion.Services
 
             var regiao = ObterRegiaoPorUF(uf);
 
-            switch (regiao)
+            return regiao switch
             {
-                case "Norte":
-                case "Nordeste":
-                    return 0.30m;
-
-                case "Centro-Oeste":
-                case "Sul":
-                    return 0.20m;
-
-                case "Sudeste":
-                    return 0.10m;
-
-                default:
-                    throw new ArgumentException("Região não identificada");
-            }
+                "Norte" or "Nordeste" => 0.30m,
+                "Centro-Oeste" or "Sul" => 0.20m,
+                "Sudeste" => 0.10m,
+                _ => throw new ArgumentException("Região não identificada"),
+            };
         }
     }
 }

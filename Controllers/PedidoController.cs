@@ -24,6 +24,12 @@ namespace ControladorOnion.Controllers
         public async Task<IActionResult> Index()
         {
             var pedidos = await _pedidoRepository.GetAllPedidosAsync();
+            if (pedidos.Count == 0)
+            {
+                TempData["PedidoMessageNoData"] = "Sem dados para mostrar, por favor importe alguns dados na aba 'Cadastrar Dados'";
+                return View(pedidos);
+            }
+
             return View(pedidos);
         }
 
@@ -54,9 +60,7 @@ namespace ControladorOnion.Controllers
                     {
                         ModelState.AddModelError(validacaoPedido.Campo, validacaoPedido.Erro);
                         return View(pedido);
-                    }
- 
-                   
+                    }          
                 }
                 else
                 {

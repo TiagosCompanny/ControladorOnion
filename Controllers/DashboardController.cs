@@ -19,6 +19,14 @@ namespace ControladorOnion.Controllers
         {
             var pedidos = await _pedidoRepository.GetAllPedidosAsync();
 
+
+            if(pedidos.Count == 0)
+            {
+                TempData["DashboardMessageNoData"] = "Sem dados para mostrar, por favor importe alguns dados na aba 'Cadastrar Dados'";
+                return View(pedidos);
+            }
+
+
             // Dados para o gráfico de vendas por região
             var vendasPorRegiao = pedidos
            .GroupBy(p => p.Regiao)

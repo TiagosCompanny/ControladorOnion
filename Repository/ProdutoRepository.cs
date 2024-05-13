@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ControladorOnion.Context;
 using ControladorOnion.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControladorOnion.Repository
@@ -22,11 +23,21 @@ namespace ControladorOnion.Repository
 
         public async Task<Produto> GetProdutoByIdAsync(int id)
         {
-            return await _context.Produtos.FindAsync(id);
+            var produto = await _context.Produtos.FindAsync(id);
+
+            if (produto is not null)
+                return produto;
+            else
+                throw new Exception("Produto não encontrado, entre em contato com a equipe de desenvolvimento");
         }
         public async Task<Produto> GetProdutoByNameAsync(string nome)
         {
-            return await _context.Produtos.FirstOrDefaultAsync(p => p.Nome == nome);
+            var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.Nome == nome);
+
+            if (produto is not null)
+                return produto;
+            else
+                throw new Exception("Produto não encontrado, entre em contato com a equipe de desenvolvimento");
         }
 
         public async Task AddProdutoAsync(Produto produto)
@@ -43,9 +54,18 @@ namespace ControladorOnion.Repository
 
         public async Task DeleteProdutoAsync(int id)
         {
-            var produto = await _context.Produtos.FindAsync(id);
-            _context.Produtos.Remove(produto);
-            await _context.SaveChangesAsync();
+            Produto? produto = await _context.Produtos.FindAsync(id);
+
+            if (produto is not null)
+            {
+                _context.Produtos.Remove(produto);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Erro ao deletar o produto");
+            }
+
         }
 
         public bool ProdutoExists(int id)

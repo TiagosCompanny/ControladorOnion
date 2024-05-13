@@ -43,7 +43,12 @@ namespace ControladorOnion.Repository
         }
         public async Task<Pedido> GetPedidoByIdAsync(int id)
         {
-            return await _context.Pedidos.FindAsync(id);
+
+            var retorno = await _context.Pedidos.FindAsync(id);
+            if (retorno is not null)
+                return retorno;
+            else
+                throw new Exception("Pedido não encontrado, entre em contato com a equipe de desenvolvimento");
         }
 
         public async Task AddPedidoAsync(Pedido pedido)
@@ -73,8 +78,16 @@ namespace ControladorOnion.Repository
         public async Task DeletePedidoAsync(int id)
         {
             var pedido = await _context.Pedidos.FindAsync(id);
-            _context.Pedidos.Remove(pedido);
-            await _context.SaveChangesAsync();
+
+            if(pedido is not null)
+            {
+                _context.Pedidos.Remove(pedido);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("Erro ao deletar o pedido");
+            }        
         }
 
         public bool PedidoExists(int numeroPedido)
