@@ -57,26 +57,10 @@ O usuário do sistema deverá importar uma planilha de pedidos ([exemplo](https:
 
     ```bash
     git clone https://github.com/TiagosCompanny/ControladorOnion.git
-    cd repo
+    cd ControladorOnion
     ```
 
-2. **Configure o back-end:**
-
-    - Certifique-se de ter o .NET Core SDK instalado.
-    - Navegue até o diretório do projeto backend e restaure as dependências:
-
-      ```bash
-      cd backend
-      dotnet restore
-      ```
-
-    - Execute as migrações para o banco de dados InMemory:
-
-      ```bash
-      dotnet ef database update
-      ```
-
-    - Inicie o servidor:
+2. **Inicie o servidor:**
 
       ```bash
       dotnet run
