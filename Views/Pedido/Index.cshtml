@@ -21,6 +21,8 @@
             <th>CEP</th>
             <th>Produto</th>
             <th>Número do Pedido</th>
+            <th>Dias para Entrega</th>
+            <th>Valor Frete</th>
             <th>Data</th>
             <th></th>
         </tr>
@@ -39,6 +41,8 @@
                 <td>@pedido.CEP</td>
                 <td>@pedido.Produto</td>
                 <td>@pedido.NumeroPedido</td>
+                <td>@pedido.TempoEntregaEmDias</td>
+                <td>@pedido.ValorFrete</td>
                 <td>@pedido.Data.ToString("dd/MM/yyyy", culturaDataHora)</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@pedido.PedidoId" class="btn btn-info">Editar</a>

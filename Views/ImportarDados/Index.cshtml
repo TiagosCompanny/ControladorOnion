@@ -7,7 +7,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <h1>Importar Dados do Excel</h1>
-
+<br>
+<p class="lead" style="text-align: justify; font-family: Bahnschrift, sans-serif; font-size: 18px; margin-right: 80px"> 
+    Nossa plataforma simplifica a importação de produtos através do envio de planilhas Excel, agilizando o processo de cadastro. Com validações rigorosas de CPF, CEP e valores, garantimos a integridade dos dados, assegurando transações precisas e confiáveis!
+    
+</p>
+<p class="lead" style="text-align: justify; font-family: Bahnschrift, sans-serif; font-size: 18px; margin-right: 80px">
+    Preecha conforme a planilha de modelo a baixo, não se preocupe com os calculos de fretes e tempo de entrega, nós cuidamos disso pra você.
+</p>
+<br>
+<hr>
+<br>
 <form method="post" enctype="multipart/form-data" action="@Url.Action("UploadPlanilhaPedidos", "ImportarDados")">
     <div class="mb-3">
         <label for="InputFile" class="form-label">Selecione o arquivo Excel:</label>

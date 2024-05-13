@@ -11,25 +11,32 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Home">
-                    <img src="\Content\Imagens\hubCountLogo.png" alt="GIF" width="60" height="60">
+                    <img src="\Content\Imagens\hubCountLogo.png" alt="GIF" width="80" height="80">
                 </a>
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="ImportarDados" asp-action="Index">Cadastrar Dados</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Pedido" asp-action="Index">Pedidos</a>
-                    </li>
-                </ul>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto" style="margin-left: 35px;">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark corporate-font" asp-area="" asp-controller="Home" asp-action="Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark corporate-font" asp-area="" asp-controller="ImportarDados" asp-action="Index">Cadastrar Dados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark corporate-font" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark corporate-font" asp-area="" asp-controller="Produto" asp-action="Index">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark corporate-font" asp-area="" asp-controller="Pedido" asp-action="Index">Pedidos</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

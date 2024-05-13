@@ -49,3 +49,8 @@ body {
         padding: 0.25em 0.75em;
     }
 }
+
+.corporate-font {
+    font-family: Bahnschrift;
+    font-size: large;
+}

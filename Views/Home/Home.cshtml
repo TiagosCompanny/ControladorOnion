@@ -42,4 +42,26 @@
             </p>
         </section>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+            <h2 id="gettingStartedTitle">Importar Dados</h2>
+            <p>
+                Clique para ir para Área de Pedidos.
+            </p>
+            <p>
+                @Html.ActionLink("Área de Pedidos", "Index", "Pedido", new { area = "" }, new { @class = "buttonMenuInitial" })
+            </p>
+        </section>
+        <section class="col-md-4" aria-labelledby="librariesTitle">
+            <h2 id="librariesTitle">Relatórios</h2>
+            <p>
+                Clique para ir para Área de Produtos.
+            </p>
+            <p>
+                @Html.ActionLink("Área de Pedidos", "Index", "Produto", new { area = "" }, new { @class = "buttonMenuInitial" })
+            </p>
+        </section>
+    </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿using ControladorOnion.Context;
 using ControladorOnion.Models;
+using ControladorOnion.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControladorOnion.Repository
@@ -8,10 +9,14 @@ namespace ControladorOnion.Repository
     {
 
         private readonly ControladorContext _context;
+        public readonly CepApiService _ApiCep;
+        public readonly ProdutoRepository _produtoRepository;
 
         public PedidoRepository(ControladorContext context)
         {
             _context = context;
+            _ApiCep = new CepApiService();
+            _produtoRepository = new ProdutoRepository(context);
         }
 
         public async Task<List<Pedido>> GetAllPedidosAsync()
@@ -24,6 +29,12 @@ namespace ControladorOnion.Repository
 
             foreach (var pedido in pedidos)
             {
+                var consultaDadosApiCep = _ApiCep.ObterUfECidade(pedido.CEP);
+                pedido.TempoEntregaEmDias = _ApiCep.CalcularTempoDeEntregaEmDias(consultaDadosApiCep.Result.Uf);
+                pedido.Regiao = _ApiCep.ObterRegiaoPorUF(consultaDadosApiCep.Result.Uf);
+                var produtoDoPedido = await _produtoRepository.GetProdutoByNameAsync(pedido.Produto);
+                pedido.ValorFrete = produtoDoPedido.Valor * _ApiCep.ObterPorcentagemCalculoFrete(consultaDadosApiCep.Result.Uf);
+
                 _context.Add(pedido);
             }
 
@@ -37,12 +48,24 @@ namespace ControladorOnion.Repository
 
         public async Task AddPedidoAsync(Pedido pedido)
         {
+            var consultaDadosApiCep = _ApiCep.ObterUfECidade(pedido.CEP);
+            pedido.TempoEntregaEmDias = _ApiCep.CalcularTempoDeEntregaEmDias(consultaDadosApiCep.Result.Uf);
+            pedido.Regiao = _ApiCep.ObterRegiaoPorUF(consultaDadosApiCep.Result.Uf);
+            var produtoDoPedido = await _produtoRepository.GetProdutoByNameAsync(pedido.Produto);
+            pedido.ValorFrete = produtoDoPedido.Valor * _ApiCep.ObterPorcentagemCalculoFrete(consultaDadosApiCep.Result.Uf);
+
             _context.Add(pedido);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdatePedidoAsync(Pedido pedido)
         {
+            var consultaDadosApiCep = _ApiCep.ObterUfECidade(pedido.CEP);
+            pedido.TempoEntregaEmDias = _ApiCep.CalcularTempoDeEntregaEmDias(consultaDadosApiCep.Result.Uf);
+            pedido.Regiao = _ApiCep.ObterRegiaoPorUF(consultaDadosApiCep.Result.Uf);
+            var produtoDoPedido = await _produtoRepository.GetProdutoByNameAsync(pedido.Produto);
+            pedido.ValorFrete = produtoDoPedido.Valor * _ApiCep.ObterPorcentagemCalculoFrete(consultaDadosApiCep.Result.Uf);
+
             _context.Update(pedido);
             await _context.SaveChangesAsync();
         }
