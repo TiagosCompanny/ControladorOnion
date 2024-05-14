@@ -51,6 +51,13 @@ O usuário do sistema deverá importar uma planilha de pedidos ([exemplo](https:
 - Ser um sistema web.
 - Criar seed de produtos.
 
+## Demonstração
+
+Uma breve demosntração da aplicação passando por algumas views e executando algumas tarefas do CRUD.
+
+![GifOnionControler_Demo](https://github.com/TiagosCompanny/ControladorOnion/assets/116459741/19341412-8c15-42b7-bbad-3ac2ae09ff93)
+
+
 ## Instruções de Setup
 
 1. **Clone o repositório:**
@@ -65,4 +72,6 @@ O usuário do sistema deverá importar uma planilha de pedidos ([exemplo](https:
       ```bash
       dotnet run
       ```
+2. **Abra a aplicação no seu navegador:**
+   http://localhost:5019
 
